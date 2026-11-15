@@ -1,0 +1,1 @@
+The PNG files in this folder are interface reference captures included in the previously supplied website bundle. They are not represented as fresh screenshots from the user's current localhost session. After installing the final 16-table version, replace these with fresh captures from http://localhost/Hostel_Management_System/.

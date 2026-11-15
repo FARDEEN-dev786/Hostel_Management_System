@@ -1,0 +1,24 @@
+INITIAL RELATIONAL SCHEMA (AS SUBMITTED IN HOSTEL_MANAGEMENT_SYSTEM (2).pdf)
+
+STUDENT(Student_ID PK, Student_Name, DOB, Phone_No, Age [Derived from DOB], Nationality, Year, Branch, Department, Email UNIQUE, Admission_Date)
+HOSTELLER(Student_ID PK/FK -> STUDENT(Student_ID), Distance_From_Residence)
+DAY_SCHOLAR(Student_ID PK/FK -> STUDENT(Student_ID), Transport_Required, Arrival_Time)
+HOSTEL(Hostel_ID PK, Hostel_Name, Hostel_Type, Warden_Name)
+ROOM(Room_ID PK, Hostel_ID FK -> HOSTEL(Hostel_ID), Room_Number, Floor, Capacity, Room_Status)
+ROOM_ALLOCATION(Allocation_ID PK, Room_ID FK -> ROOM(Room_ID), Start_Date, End_Date, Allocation_Status)
+ALLOCATION_MEMBER(Allocation_ID PK/FK -> ROOM_ALLOCATION(Allocation_ID), Member_No PK, Student_ID FK -> HOSTELLER(Student_ID) UNIQUE, Join_Date)
+ATTENDANCE(Student_ID PK/FK -> HOSTELLER(Student_ID), Attendance_Date PK, Attendance_Status)
+WASHING_MACHINE(Student_ID PK/FK -> HOSTELLER(Student_ID), Machine_No PK, ...)
+CLEANING(Allocation_ID PK/FK -> ROOM_ALLOCATION(Allocation_ID), Cleaning_ID PK, ...)
+ELECTRICITY_VOLTAGE(Allocation_ID PK/FK -> ROOM_ALLOCATION(Allocation_ID), Reading_ID PK, ...)
+HOSTEL_FEE(Fee_ID PK, Student_ID FK -> HOSTELLER(Student_ID), Hostel_ID FK -> HOSTEL(Hostel_ID), Amount, Due_Date, Payment_Date, Payment_Status)
+COMPLAINT(Complaint_ID PK, Student_ID FK -> HOSTELLER(Student_ID), Room_ID FK -> ROOM(Room_ID), Complaint_Type, Description, Complaint_Date, Priority, Status)
+MAINTENANCE(Maintenance_ID PK, Complaint_ID FK -> COMPLAINT(Complaint_ID), Assigned_To, Start_Date, Completion_Date, Maintenance_Status, Cost)
+MAINTENANCE_ASSIGNMENT(Assignment_ID PK, Complaint_ID FK -> COMPLAINT(Complaint_ID), Maintenance_ID FK -> MAINTENANCE(Maintenance_ID), Assigned_Date, Assignment_Status)
+VISITOR(Visitor_ID PK, Student_ID FK -> HOSTELLER(Student_ID), Visitor_Name, Relation, Phone, Visit_Date, Entry_Time, Exit_Time)
+
+Notes on the submitted initial version:
+1. STAFF is referred to by Assigned_To/warden concepts but is not defined as a relation in this relational-schema list. A STAFF relation is therefore added in the final design.
+2. WASHING_MACHINE is shown as dependent on a hosteller, which models an individual student-machine association rather than a shared hostel facility. It is redesigned as a hostel-owned machine; WASHING_BOOKINGS stores student reservations.
+3. CLEANING and ELECTRICITY_VOLTAGE are optional operational logs and are removed to reduce scope and diagram size.
+4. MAINTENANCE_ASSIGNMENT duplicates the assignment already expressible through MAINTENANCE.Staff_ID for the chosen one-work-order/one-assignee workflow; it is removed.

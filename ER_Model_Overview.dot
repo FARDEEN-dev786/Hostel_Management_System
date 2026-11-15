@@ -1,0 +1,29 @@
+digraph ER {
+ graph [rankdir=LR, splines=ortho, nodesep=0.28, ranksep=0.55, pad=0.2, bgcolor="white", fontname="Helvetica", label="FINAL HOSTEL MANAGEMENT ER MODEL — 15 RELATIONS", labelloc=t, fontsize=20];
+ node [fontname="Helvetica", fontsize=9, color="#315B49", fontcolor="#20352B", style="filled", fillcolor="#EAF2ED", penwidth=1.3];
+ edge [fontname="Helvetica", fontsize=8, color="#5B6B62", penwidth=1.0, arrowsize=0.6];
+ STUDENTS [shape=box]; HOSTELLERS [shape=box]; DAY_SCHOLARS [shape=box]; STAFF [shape=box]; USER_ACCOUNTS [shape=box]; HOSTELS [shape=box]; ROOMS [shape=box]; ROOM_ALLOCATIONS [shape=box];
+ ALLOCATION_MEMBERS [shape=box, peripheries=2, fillcolor="#F7EFE4", color="#9B7448"];
+ ATTENDANCE [shape=box, peripheries=2, fillcolor="#F7EFE4", color="#9B7448"];
+ WASHING_MACHINES [shape=box]; WASHING_BOOKINGS [shape=box]; HOSTEL_FEES [shape=box]; COMPLAINTS [shape=box]; MAINTENANCE [shape=box];
+ node [shape=diamond, style="filled", fillcolor="#F4E9D9", color="#A47C4C", fontsize=8, width=1.15, height=.55];
+ ISA [label="ISA (d)"]; HAS_STUDENT_ACCOUNT [label="HAS ACCOUNT"]; HAS_STAFF_ACCOUNT [label="HAS ACCOUNT"]; WARDENS [label="WARDENS"]; CONTAINS [label="CONTAINS"]; HAS_ALLOCATION [label="HAS ALLOCATION"]; CONTAINS_MEMBER [label="CONTAINS MEMBER", peripheries=2]; HAS_MEMBERSHIP [label="HAS MEMBERSHIP"]; HAS_ATTENDANCE [label="HAS ATTENDANCE", peripheries=2]; MARKS [label="MARKS"]; PROVIDES [label="PROVIDES"]; MAKES [label="MAKES"]; RECEIVES_BOOKING [label="RECEIVES BOOKING"]; HAS_FEE [label="HAS FEE"]; RAISES [label="RAISES"]; GENERATES [label="GENERATES"]; HANDLES [label="HANDLES"];
+ STUDENTS -> ISA; ISA -> HOSTELLERS; ISA -> DAY_SCHOLARS;
+ STUDENTS -> HAS_STUDENT_ACCOUNT [label="0..1"]; HAS_STUDENT_ACCOUNT -> USER_ACCOUNTS [label="1"];
+ STAFF -> HAS_STAFF_ACCOUNT [label="0..1"]; HAS_STAFF_ACCOUNT -> USER_ACCOUNTS [label="1"];
+ STAFF -> WARDENS [label="0..N"]; WARDENS -> HOSTELS [label="0..1"];
+ HOSTELS -> CONTAINS [label="1"]; CONTAINS -> ROOMS [label="N"];
+ ROOMS -> HAS_ALLOCATION [label="1"]; HAS_ALLOCATION -> ROOM_ALLOCATIONS [label="N"];
+ ROOM_ALLOCATIONS -> CONTAINS_MEMBER [label="1"]; CONTAINS_MEMBER -> ALLOCATION_MEMBERS [label="N"];
+ HOSTELLERS -> HAS_MEMBERSHIP [label="1"]; HAS_MEMBERSHIP -> ALLOCATION_MEMBERS [label="N over time"];
+ HOSTELLERS -> HAS_ATTENDANCE [label="1"]; HAS_ATTENDANCE -> ATTENDANCE [label="N"];
+ STAFF -> MARKS [label="0..N"]; MARKS -> ATTENDANCE [label="0..1"];
+ HOSTELS -> PROVIDES [label="1"]; PROVIDES -> WASHING_MACHINES [label="N"];
+ HOSTELLERS -> MAKES [label="1"]; MAKES -> WASHING_BOOKINGS [label="N"];
+ WASHING_MACHINES -> RECEIVES_BOOKING [label="1"]; RECEIVES_BOOKING -> WASHING_BOOKINGS [label="N"];
+ ALLOCATION_MEMBERS -> HAS_FEE [label="1"]; HAS_FEE -> HOSTEL_FEES [label="N"];
+ ALLOCATION_MEMBERS -> RAISES [label="1"]; RAISES -> COMPLAINTS [label="N"];
+ COMPLAINTS -> GENERATES [label="1"]; GENERATES -> MAINTENANCE [label="N"];
+ STAFF -> HANDLES [label="0..N"]; HANDLES -> MAINTENANCE [label="0..1"];
+
+}

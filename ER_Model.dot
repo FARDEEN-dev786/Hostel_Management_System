@@ -1,0 +1,46 @@
+digraph HostelER {
+  graph [rankdir=LR, splines=ortho, nodesep=0.40, ranksep=0.75, pad=0.25, bgcolor="white", fontname="Arial", label="COLLEGE HOSTEL MANAGEMENT & MAINTENANCE SYSTEM — FINAL ER MODEL", labelloc=t, fontsize=20];
+  node [shape=plain, fontname="Arial", fontsize=9];
+  edge [fontname="Arial", fontsize=8, color="#52665c", penwidth=1.15, arrowsize=0.65];
+  STUDENT [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>STUDENT</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Student_ID</TD></TR><TR><TD ALIGN="LEFT">Student_Name, Student_Type</TD></TR><TR><TD ALIGN="LEFT">DOB, Phone, Email (UQ)</TD></TR><TR><TD ALIGN="LEFT">Year, Branch, Department</TD></TR><TR><TD ALIGN="LEFT">Nationality, Admission_Date</TD></TR></TABLE>>];
+  HOSTELLER [label=< <TABLE BORDER="1" COLOR="#397763" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#397763"><FONT COLOR="white"><B>HOSTELLER</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK/FK</B> Student_ID</TD></TR><TR><TD ALIGN="LEFT">Distance_From_Residence</TD></TR><TR><TD ALIGN="LEFT">Emergency_Contact</TD></TR></TABLE>>];
+  DAY_SCHOLAR [label=< <TABLE BORDER="1" COLOR="#397763" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#397763"><FONT COLOR="white"><B>DAY_SCHOLAR</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK/FK</B> Student_ID</TD></TR><TR><TD ALIGN="LEFT">Transport_Required</TD></TR><TR><TD ALIGN="LEFT">Arrival_Time</TD></TR></TABLE>>];
+  STAFF [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>STAFF</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Staff_ID</TD></TR><TR><TD ALIGN="LEFT">Full_Name, Email (UQ)</TD></TR><TR><TD ALIGN="LEFT">Phone, Staff_Role</TD></TR><TR><TD ALIGN="LEFT">Date_Joined, Is_Active</TD></TR></TABLE>>];
+  USER_ACCOUNT [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>USER_ACCOUNT</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Account_ID</TD></TR><TR><TD ALIGN="LEFT">Username (UQ), Password_Hash</TD></TR><TR><TD ALIGN="LEFT">Account_Role, Is_Active</TD></TR><TR><TD ALIGN="LEFT">Student_ID (FK, nullable)</TD></TR><TR><TD ALIGN="LEFT">Staff_ID (FK, nullable)</TD></TR></TABLE>>];
+  HOSTEL [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>HOSTEL</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Hostel_ID</TD></TR><TR><TD ALIGN="LEFT">Hostel_Name, Hostel_Type</TD></TR><TR><TD ALIGN="LEFT">Warden_Staff_ID (FK)</TD></TR><TR><TD ALIGN="LEFT">Address</TD></TR></TABLE>>];
+  ROOM [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>ROOM</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Room_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Hostel_ID</TD></TR><TR><TD ALIGN="LEFT">Room_Number, Floor_No</TD></TR><TR><TD ALIGN="LEFT">Capacity, Room_Status</TD></TR></TABLE>>];
+  ROOM_ALLOCATION [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>ROOM_ALLOCATION</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Allocation_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Room_ID</TD></TR><TR><TD ALIGN="LEFT">Start_Date, End_Date</TD></TR><TR><TD ALIGN="LEFT">Allocation_Status</TD></TR></TABLE>>];
+  ALLOCATION_MEMBER [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>ALLOCATION_MEMBER (WEAK)</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK/FK</B> Allocation_ID</TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Member_No</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Student_ID</TD></TR><TR><TD ALIGN="LEFT">Join_Date, Leave_Date</TD></TR></TABLE>>];
+  ATTENDANCE [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>ATTENDANCE (WEAK)</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK/FK</B> Student_ID</TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Attendance_Date</TD></TR><TR><TD ALIGN="LEFT">Attendance_Status, Marked_By</TD></TR><TR><TD ALIGN="LEFT">Remarks</TD></TR></TABLE>>];
+  WASHING_MACHINE [label=< <TABLE BORDER="1" COLOR="#285b4a" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#285b4a"><FONT COLOR="white"><B>WASHING_MACHINE</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Machine_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Hostel_ID</TD></TR><TR><TD ALIGN="LEFT">Machine_Number, Location</TD></TR><TR><TD ALIGN="LEFT">Machine_Status</TD></TR></TABLE>>];
+  WASHING_BOOKING [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>WASHING_BOOKING</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Booking_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Student_ID, Machine_ID</TD></TR><TR><TD ALIGN="LEFT">Booking_Date, Start_Time, End_Time</TD></TR><TR><TD ALIGN="LEFT">Booking_Status</TD></TR></TABLE>>];
+  HOSTEL_FEE [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>HOSTEL_FEE</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Fee_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Allocation_ID, Member_No</TD></TR><TR><TD ALIGN="LEFT">Fee_Type, Academic_Period</TD></TR><TR><TD ALIGN="LEFT">Amount, Due_Date, Payment_Date</TD></TR><TR><TD ALIGN="LEFT">Payment_Status, Payment_Method</TD></TR></TABLE>>];
+  COMPLAINT [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>COMPLAINT</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Complaint_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Allocation_ID, Member_No</TD></TR><TR><TD ALIGN="LEFT">Complaint_Type, Description</TD></TR><TR><TD ALIGN="LEFT">Complaint_Date, Priority, Status</TD></TR></TABLE>>];
+  MAINTENANCE [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>MAINTENANCE</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Maintenance_ID</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> Complaint_ID, Staff_ID</TD></TR><TR><TD ALIGN="LEFT">Start_Date, Completion_Date</TD></TR><TR><TD ALIGN="LEFT">Maintenance_Status, Cost, Work_Notes</TD></TR></TABLE>>];
+  CLEANING_LOG [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>CLEANING_LOG (WEAK)</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK/FK</B> Allocation_ID</TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Cleaning_ID</TD></TR><TR><TD ALIGN="LEFT">Scheduled_Date, Cleaning_Status</TD></TR><TR><TD ALIGN="LEFT">Assigned_Staff_ID, Notes</TD></TR></TABLE>>];
+  ELECTRICITY_READING [label=< <TABLE BORDER="1" COLOR="#a76d35" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#a76d35"><FONT COLOR="white"><B>ELECTRICITY_READING (WEAK)</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK/FK</B> Allocation_ID</TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> Reading_ID</TD></TR><TR><TD ALIGN="LEFT">Recorded_At, Voltage_Value</TD></TR><TR><TD ALIGN="LEFT">Recorded_By, Remarks</TD></TR></TABLE>>];
+
+  STUDENT -> HOSTELLER [label="1 : 0..1", arrowhead=none];
+  STUDENT -> DAY_SCHOLAR [label="1 : 0..1", arrowhead=none];
+  STUDENT -> USER_ACCOUNT [label="1 : 0..1", arrowhead=none];
+  STAFF -> USER_ACCOUNT [label="1 : 0..1", arrowhead=none];
+  STAFF -> HOSTEL [label="warden", arrowhead=none];
+  HOSTEL -> ROOM [label="1 : N", arrowhead=none];
+  ROOM -> ROOM_ALLOCATION [label="1 : N over time", arrowhead=none];
+  ROOM_ALLOCATION -> ALLOCATION_MEMBER [label="1 : N identifying", arrowhead=none];
+  HOSTELLER -> ALLOCATION_MEMBER [label="1 : N over time", arrowhead=none];
+  HOSTELLER -> ATTENDANCE [label="1 : N identifying", arrowhead=none];
+  HOSTELLER -> WASHING_BOOKING [label="1 : N", arrowhead=none];
+  HOSTEL -> WASHING_MACHINE [label="1 : N", arrowhead=none];
+  WASHING_MACHINE -> WASHING_BOOKING [label="1 : N", arrowhead=none];
+  ALLOCATION_MEMBER -> HOSTEL_FEE [label="1 : N", arrowhead=none];
+  ALLOCATION_MEMBER -> COMPLAINT [label="1 : N", arrowhead=none];
+  COMPLAINT -> MAINTENANCE [label="1 : N", arrowhead=none];
+  STAFF -> MAINTENANCE [label="1 : N", arrowhead=none];
+  ROOM_ALLOCATION -> CLEANING_LOG [label="1 : N identifying", arrowhead=none];
+  ROOM_ALLOCATION -> ELECTRICITY_READING [label="1 : N identifying", arrowhead=none];
+
+  {rank=same; STUDENT; STAFF; HOSTEL}
+  {rank=same; HOSTELLER; DAY_SCHOLAR; USER_ACCOUNT; ROOM}
+  {rank=same; ROOM_ALLOCATION; WASHING_MACHINE; ATTENDANCE}
+}

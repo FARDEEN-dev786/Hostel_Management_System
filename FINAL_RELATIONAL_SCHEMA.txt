@@ -1,0 +1,117 @@
+FINAL RELATIONAL SCHEMA AFTER NORMALIZATION (15 RELATIONS)
+
+Notation: PK = Primary Key, FK = Foreign Key, UQ = Unique, NULL = optional.
+
+1. STUDENTS(
+   Student_ID PK,
+   Full_Name, Student_Type, DOB, Phone, Nationality,
+   Year_Of_Study, Branch, Department, Email UQ, Admission_Date,
+   Created_At
+)
+
+2. HOSTELLERS(
+   Student_ID PK/FK -> STUDENTS.Student_ID,
+   Distance_From_Residence, Emergency_Contact
+)
+
+3. DAY_SCHOLARS(
+   Student_ID PK/FK -> STUDENTS.Student_ID,
+   Transport_Required, Arrival_Time
+)
+
+4. STAFF(
+   Staff_ID PK, Full_Name, Email UQ, Phone, Staff_Role,
+   Date_Joined, Is_Active
+)
+
+5. USER_ACCOUNTS(
+   Account_ID PK, Username UQ, Password_Hash, Account_Role,
+   Student_ID FK -> STUDENTS.Student_ID UQ NULL,
+   Staff_ID FK -> STAFF.Staff_ID UQ NULL,
+   Is_Active, Created_At
+)
+   Role/owner CHECK: Admin has neither owner FK; Student has only Student_ID;
+   Staff has only Staff_ID.
+
+6. HOSTELS(
+   Hostel_ID PK, Hostel_Name UQ, Hostel_Type,
+   Warden_Staff_ID FK -> STAFF.Staff_ID NULL, Address
+)
+
+7. ROOMS(
+   Room_ID PK, Hostel_ID FK -> HOSTELS.Hostel_ID,
+   Room_Number, Floor_No, Capacity, Room_Status,
+   UQ(Hostel_ID, Room_Number)
+)
+
+8. ROOM_ALLOCATIONS(
+   Allocation_ID PK, Room_ID FK -> ROOMS.Room_ID,
+   Start_Date, End_Date, Allocation_Status,
+   Active_Room_ID [generated; unique when allocation is Active], Created_At
+)
+
+9. ALLOCATION_MEMBERS(
+   Allocation_ID PK/FK -> ROOM_ALLOCATIONS.Allocation_ID,
+   Member_No PK, Student_ID FK -> HOSTELLERS.Student_ID,
+   Join_Date, Leave_Date,
+   Active_Student_ID [generated; unique while membership is active]
+)
+   Composite PK: (Allocation_ID, Member_No).
+
+10. ATTENDANCE(
+    Student_ID PK/FK -> HOSTELLERS.Student_ID,
+    Attendance_Date PK, Attendance_Status,
+    Marked_By FK -> STAFF.Staff_ID NULL, Remarks
+)
+    Composite PK: (Student_ID, Attendance_Date).
+
+11. WASHING_MACHINES(
+    Machine_ID PK, Hostel_ID FK -> HOSTELS.Hostel_ID,
+    Machine_Number, Location, Machine_Status,
+    UQ(Hostel_ID, Machine_Number)
+)
+
+12. WASHING_BOOKINGS(
+    Booking_ID PK, Student_ID FK -> HOSTELLERS.Student_ID,
+    Machine_ID FK -> WASHING_MACHINES.Machine_ID,
+    Booking_Date, Start_Time, End_Time, Booking_Status, Requested_At
+)
+
+13. HOSTEL_FEES(
+    Fee_ID PK,
+    Allocation_ID, Member_No,
+    Fee_Type, Academic_Period, Amount, Due_Date, Payment_Date,
+    Payment_Status, Payment_Method, Transaction_Reference,
+    FK(Allocation_ID, Member_No) -> ALLOCATION_MEMBERS(Allocation_ID, Member_No),
+    UQ(Allocation_ID, Member_No, Fee_Type, Academic_Period)
+)
+
+14. COMPLAINTS(
+    Complaint_ID PK, Allocation_ID, Member_No,
+    Complaint_Type, Description, Complaint_Date, Priority, Complaint_Status,
+    FK(Allocation_ID, Member_No) -> ALLOCATION_MEMBERS(Allocation_ID, Member_No)
+)
+
+15. MAINTENANCE(
+    Maintenance_ID PK, Complaint_ID FK -> COMPLAINTS.Complaint_ID,
+    Staff_ID FK -> STAFF.Staff_ID NULL,
+    Start_Date, Completion_Date, Maintenance_Status, Cost, Work_Notes
+)
+
+
+FUNCTIONAL DEPENDENCIES (CORE)
+- STUDENTS: Student_ID -> all other student attributes; Email -> Student_ID (unique).
+- HOSTELLERS: Student_ID -> Distance_From_Residence, Emergency_Contact.
+- DAY_SCHOLARS: Student_ID -> Transport_Required, Arrival_Time.
+- STAFF: Staff_ID -> all staff attributes; Email -> Staff_ID (unique).
+- USER_ACCOUNTS: Account_ID -> account attributes; Username -> Account_ID.
+- HOSTELS: Hostel_ID -> hostel attributes; Hostel_Name -> Hostel_ID.
+- ROOMS: Room_ID -> room attributes; (Hostel_ID, Room_Number) -> Room_ID.
+- ROOM_ALLOCATIONS: Allocation_ID -> room, dates and status.
+- ALLOCATION_MEMBERS: (Allocation_ID, Member_No) -> Student_ID, Join_Date, Leave_Date.
+- ATTENDANCE: (Student_ID, Attendance_Date) -> Attendance_Status, Marked_By, Remarks.
+- WASHING_MACHINES: Machine_ID -> machine attributes; (Hostel_ID, Machine_Number) -> Machine_ID.
+- WASHING_BOOKINGS: Booking_ID -> student, machine, date, time interval and status.
+- HOSTEL_FEES: Fee_ID -> fee attributes; the declared unique business key identifies one fee per member/type/period.
+- COMPLAINTS: Complaint_ID -> allocation member, issue details, priority and status.
+- MAINTENANCE: Maintenance_ID -> complaint, assignee, dates, status, cost and notes.
